@@ -1,0 +1,20 @@
+{
+  "name": "pdf-formatter",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Kirill Kutuzov",
+  "license": "ISC",
+  "dependencies": {
+    "convert-excel-to-json": "^1.7.0",
+    "date-fns": "^2.28.0",
+    "docxtemplater": "^3.28.2",
+    "number-to-words-ru": "^2.3.2",
+    "pizzip": "^3.1.1"
+  }
+}
