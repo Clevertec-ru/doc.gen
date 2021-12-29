@@ -11,7 +11,7 @@ export class WordController {
     this.#sampleFile = sampleFile;
   }
 
-  generateWordDoc(template, index = 0) {
+  generateWordDoc(template) {
     const zip = new PizZip(this.#sampleFile);
     const doc = new Docxtemplater(zip, {
       paragraphLoop: true,
@@ -21,7 +21,7 @@ export class WordController {
     doc.render(template);
 
     const buf = doc.getZip().generate({ type: "nodebuffer" });
-
-    fs.writeFileSync(`${this.#outputDirectory}/output_${index}.docx`, buf);
+    const { contract, usFormatEndWorkDate, actSum } = template;
+    fs.writeFileSync(`${this.#outputDirectory}/Акт-ГПД-Н${contract} ${usFormatEndWorkDate}(${actSum}=00).docx`, buf);
   }
 }

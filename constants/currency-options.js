@@ -1,7 +1,7 @@
 export const CURRENCY_OPTIONS = {
   withoutFractional: {
     currency: "rub",
-    declension: "genitive",
+    declension: "nominative",
     showNumberParts: {
       integer: true,
       fractional: false,
@@ -12,7 +12,7 @@ export const CURRENCY_OPTIONS = {
   },
   withoutInteger: {
     currency: "rub",
-    declension: "genitive",
+    declension: "nominative",
     showNumberParts: {
       integer: false,
       fractional: true,
