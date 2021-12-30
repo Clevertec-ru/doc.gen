@@ -2,11 +2,10 @@
   "name": "pdf-formatter",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "electron src/main.js"
   },
   "author": "Kirill Kutuzov",
   "license": "ISC",
@@ -16,5 +15,8 @@
     "docxtemplater": "^3.28.2",
     "number-to-words-ru": "^2.3.2",
     "pizzip": "^3.1.1"
+  },
+  "devDependencies": {
+    "electron": "^16.0.5"
   }
 }
