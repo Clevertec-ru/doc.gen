@@ -20,6 +20,8 @@ const createMainWindow = (preloadPath = "", mainTemplatePath = "", isDev = false
   if (isDev) {
     mainWindow.webContents.openDevTools();
   }
+
+  return mainWindow;
 };
 
 module.exports = {

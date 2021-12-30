@@ -1,15 +1,17 @@
 // Modules to control application life and create native browser window
-const { app, ipcMain, dialog } = require("electron");
+const { app, ipcMain, dialog, shell } = require("electron");
 const path = require("path");
 
 const { createMainWindow } = require("./window");
 const { generateWordDocs } = require("./generate-word-docs");
 
+const { OUTPUT_DIRECTORY } = require("./constants/output-directory");
+
 const preloadPath = path.join(__dirname, "preload.js");
 const mainTemplatePath = "../templates/index.html";
 
 app.whenReady().then(() => {
-  createMainWindow(preloadPath, mainTemplatePath);
+  const win = createMainWindow(preloadPath, mainTemplatePath);
 
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
@@ -26,7 +28,12 @@ app.whenReady().then(() => {
 
   ipcMain.on("click-button", async () => {
     dialog.showOpenDialog({ properties: ["openFile"] }).then((file) => {
-      generateWordDocs(file.filePaths[0]);
+      const generatedDocsMessage = generateWordDocs(file.filePaths[0]);
+      win.webContents.send("generate-success", generatedDocsMessage);
     });
+  });
+
+  ipcMain.on("file-selected", (_, fileName) => {
+    shell.openPath(`${OUTPUT_DIRECTORY}\\${fileName}`);
   });
 });

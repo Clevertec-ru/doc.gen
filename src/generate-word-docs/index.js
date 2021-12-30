@@ -13,18 +13,20 @@ const generateWordDocs = (fileDirectory) => {
   const Word = new WordController(OUTPUT_DIRECTORY, wordSampleFile);
   const modifiedRowsArray = Excel.getModifiedRowsArray();
 
+  let generatedDocsMessage = [];
+
   if (!fs.existsSync(OUTPUT_DIRECTORY)) {
     fs.mkdirSync(OUTPUT_DIRECTORY, { recursive: true });
   }
 
   deleteFilesFromOutput(OUTPUT_DIRECTORY);
 
-  modifiedRowsArray.forEach((row, index) => {
-    Word.generateWordDoc(row);
-    console.log(`word file number ${index}, is generated`);
+  modifiedRowsArray.forEach((row) => {
+    const generatedFile = Word.generateWordDoc(row);
+    generatedDocsMessage.push(generatedFile);
   });
 
-  console.log("Done");
+  return generatedDocsMessage;
 };
 
 module.exports = {
