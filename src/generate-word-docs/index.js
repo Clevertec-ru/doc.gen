@@ -9,9 +9,11 @@ const { OUTPUT_DIRECTORY } = require("../constants/output-directory");
 
 const generateWordDocs = (fileDirectory) => {
   const wordSampleFile = fs.readFileSync(WORD_SAMPLE_PATH, "binary");
-  const Excel = new ExcelController(fileDirectory);
-  const Word = new WordController(OUTPUT_DIRECTORY, wordSampleFile);
-  const modifiedRowsArray = Excel.getModifiedRowsArray();
+  const excel = new ExcelController(fileDirectory);
+  const word = new WordController(OUTPUT_DIRECTORY, wordSampleFile);
+  const modifiedRowsArray = excel.getModifiedRowsArray();
+
+  let generatedDocsMessage = [];
 
   if (!fs.existsSync(OUTPUT_DIRECTORY)) {
     fs.mkdirSync(OUTPUT_DIRECTORY, { recursive: true });
@@ -19,12 +21,13 @@ const generateWordDocs = (fileDirectory) => {
 
   deleteFilesFromOutput(OUTPUT_DIRECTORY);
 
-  modifiedRowsArray.forEach((row, index) => {
-    Word.generateWordDoc(row);
-    console.log(`word file number ${index}, is generated`);
+  modifiedRowsArray.forEach((row) => {
+    const generatedFile = word.generateWordDoc(row);
+
+    generatedDocsMessage.push(generatedFile);
   });
 
-  console.log("Done");
+  return generatedDocsMessage;
 };
 
 module.exports = {

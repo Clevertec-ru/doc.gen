@@ -12,7 +12,7 @@ class WordController {
   }
 
   generateWordDoc(template) {
-    const { contract, endWorkDate, actSum } = template;
+    const { contract, endWorkDate, textedAmount, initialName } = template;
     const zip = new PizZip(this.#sampleFile);
     const doc = new Docxtemplater(zip, {
       paragraphLoop: true,
@@ -22,8 +22,15 @@ class WordController {
     doc.render(template);
 
     const buf = doc.getZip().generate({ type: "nodebuffer" });
+    const fileName = `Акт-ГПД-Н${contract} ${endWorkDate}(${textedAmount}=00).docx`;
+    const resultName = `${initialName.split(" ")[0]} ${fileName}`;
 
-    fs.writeFileSync(`${this.#outputDirectory}/Акт-ГПД-Н${contract} ${endWorkDate}(${actSum}=00).docx`, buf);
+    fs.writeFileSync(`${this.#outputDirectory}/${fileName}`, buf);
+
+    return {
+      resultName,
+      fileName,
+    };
   }
 }
 

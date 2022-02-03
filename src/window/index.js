@@ -5,6 +5,8 @@ const createMainWindow = (preloadPath = "", mainTemplatePath = "", isDev = false
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    resizable: false,
+    fullscreen: false,
     webPreferences: {
       preload: preloadPath,
       nodeIntegration: true,
@@ -13,13 +15,15 @@ const createMainWindow = (preloadPath = "", mainTemplatePath = "", isDev = false
     },
   });
 
-  // and load the index.html of the app.
-  mainWindow.loadFile("./templates/index.html");
+  mainWindow.loadFile(mainTemplatePath);
+  mainWindow.setMenu(null);
 
   // Open the DevTools.
   if (isDev) {
     mainWindow.webContents.openDevTools();
   }
+
+  return mainWindow;
 };
 
 module.exports = {

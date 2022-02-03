@@ -55,7 +55,15 @@ class ExcelController {
       const fractionalCurrency = numberToWordsRu.convert(columnValue, CURRENCY_OPTIONS.withoutInteger);
       const correctActSum = `${columnValue} (${integerCurrency}) российских рублей ${fractionalCurrency}`;
 
-      return { [EXCEL_INVERTED_COLUMN_NAMES[columnName]]: correctActSum };
+      return { [EXCEL_INVERTED_COLUMN_NAMES.textedAmount]: correctActSum };
+    }
+    if (columnName === EXCEL_COLUMN_NAMES.fio) {
+      const parsedName = getInitialsFromName(columnValue);
+
+      return {
+        [EXCEL_INVERTED_COLUMN_NAMES.initialName]: parsedName,
+        [EXCEL_INVERTED_COLUMN_NAMES[columnName]]: columnValue,
+      };
     }
 
     return { [EXCEL_INVERTED_COLUMN_NAMES[columnName]]: columnValue };
