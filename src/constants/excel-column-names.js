@@ -2,6 +2,7 @@ const EXCEL_COLUMN_NAMES = {
   contract: "Договор",
   contractDate: "дата договора",
   fio: "Фамилия",
+  actNumber: "номер акта",
   monthCount: "кол-во месяцев",
   actSum: "сумма в акте",
   startWorkDate: "Дата начала работы",
@@ -20,18 +21,18 @@ const EXCEL_COLUMN_NAMES = {
   recipientBankSWIFT: "S.W.I.F.T.",
   recipientBankAccount: "Счет получателя",
   recipient: "Получатель",
-  workList: "Работы",
 };
 
 const EXCEL_INVERTED_COLUMN_NAMES = {
   [EXCEL_COLUMN_NAMES.contract]: "contract",
   [EXCEL_COLUMN_NAMES.contractDate]: "contractDate",
   [EXCEL_COLUMN_NAMES.fio]: "fio",
+  [EXCEL_COLUMN_NAMES.actNumber]: "numberAct",
   [EXCEL_COLUMN_NAMES.monthCount]: "monthCount",
   [EXCEL_COLUMN_NAMES.actSum]: "actSum",
   [EXCEL_COLUMN_NAMES.startWorkDate]: "startWorkDate",
   [EXCEL_COLUMN_NAMES.endWorkDate]: "endWorkDate",
-  [EXCEL_COLUMN_NAMES.works]: "works",
+  [EXCEL_COLUMN_NAMES.works]: "workList",
   [EXCEL_COLUMN_NAMES.city]: "city",
   [EXCEL_COLUMN_NAMES.address]: "address",
   [EXCEL_COLUMN_NAMES.phone]: "phone",
@@ -45,8 +46,8 @@ const EXCEL_INVERTED_COLUMN_NAMES = {
   [EXCEL_COLUMN_NAMES.recipientBankSWIFT]: "recipientBankSWIFT",
   [EXCEL_COLUMN_NAMES.recipientBankAccount]: "recipientBankAccount",
   [EXCEL_COLUMN_NAMES.recipient]: "recipient",
-  [EXCEL_COLUMN_NAMES.workList]: "workList",
   textedAmount: "textedAmount",
+  initialName: "initialName",
 };
 
 module.exports = {

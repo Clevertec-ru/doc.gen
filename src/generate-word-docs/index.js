@@ -9,9 +9,9 @@ const { OUTPUT_DIRECTORY } = require("../constants/output-directory");
 
 const generateWordDocs = (fileDirectory) => {
   const wordSampleFile = fs.readFileSync(WORD_SAMPLE_PATH, "binary");
-  const Excel = new ExcelController(fileDirectory);
-  const Word = new WordController(OUTPUT_DIRECTORY, wordSampleFile);
-  const modifiedRowsArray = Excel.getModifiedRowsArray();
+  const excel = new ExcelController(fileDirectory);
+  const word = new WordController(OUTPUT_DIRECTORY, wordSampleFile);
+  const modifiedRowsArray = excel.getModifiedRowsArray();
 
   let generatedDocsMessage = [];
 
@@ -22,7 +22,8 @@ const generateWordDocs = (fileDirectory) => {
   deleteFilesFromOutput(OUTPUT_DIRECTORY);
 
   modifiedRowsArray.forEach((row) => {
-    const generatedFile = Word.generateWordDoc(row);
+    const generatedFile = word.generateWordDoc(row);
+
     generatedDocsMessage.push(generatedFile);
   });
 
