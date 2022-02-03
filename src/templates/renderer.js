@@ -1,10 +1,25 @@
 const { ipcRenderer } = require("electron");
 
-const { WORD_DOCUMENT_TYPE } = require("../constants/excel-document-type");
-
 const testElement = document.getElementById("test-element");
 const button = document.getElementById("select-file-button");
 const resultBlock = document.getElementById("result");
+
+const getTitle = (text = "") => {
+  const title = document.createElement("p");
+
+  title.className = "result-title";
+  title.innerText = text;
+
+  return title;
+};
+
+const getResultList = () => {
+  const list = document.createElement("div");
+
+  list.className = "result-block result-list";
+
+  return list;
+};
 
 document.addEventListener("drop", (event) => {
   event.preventDefault();
@@ -31,17 +46,18 @@ document.addEventListener("dragleave", (event) => {
 });
 
 button.addEventListener("click", () => {
+  const title = getTitle("Выбор файла...");
+  resultBlock.append(title);
+
+  button.disabled = true;
   ipcRenderer.send("click-button");
 });
 
 ipcRenderer.on("generate-success", (_, messages) => {
-  const title = document.createElement("p");
-  const list = document.createElement("div");
+  const title = getTitle("Сгенерированные акты:");
+  const list = getResultList();
 
-  title.className = "result-title";
-  title.innerText = "Сгенерированные акты:";
-
-  list.className = "result-block result-list";
+  resultBlock.innerHTML = "";
 
   resultBlock.append(title);
   resultBlock.append(list);
@@ -57,4 +73,11 @@ ipcRenderer.on("generate-success", (_, messages) => {
 
     list.append(fileButton);
   });
+
+  button.disabled = false;
+});
+
+ipcRenderer.on("file-cancelled", () => {
+  resultBlock.innerHTML = "";
+  button.disabled = false;
 });

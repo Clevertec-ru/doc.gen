@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "Rubik Mono One";
-  src: url(./RubikMonoOne-Regular.ttf) format("truetype");
+  font-family: "Montserrat";
+  src: url(./Montserrat-Bold.ttf) format("truetype");
 }
 
 html {
@@ -11,15 +11,20 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  align-items: center;
   min-height: 100%;
   padding: 0 40px;
   overflow: hidden;
 }
 
-.title {
-  font-family: "Rubik Mono One", sans-serif;
-  font-size: 3.5vw;
+.select-file-block {
+  display: flex;
+  align-items: center;
+  column-gap: 40px;
+}
+
+.select-file-block .title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 2.5vw;
 }
 
 .result-block {
@@ -49,47 +54,47 @@ body {
   background-color: #5757574f;
 }
 
-.button {
-  appearance: none;
-  background-color: transparent;
-  border: 2px solid #1a1a1a;
-  border-radius: 15px;
+.select-button {
+  height: 40px;
+  width: 40px;
+
+  padding: 10px;
+
+  border: 1px solid rgba(13, 5, 37, 0.1);
   box-sizing: border-box;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08), 0px 1px 12px rgba(0, 0, 0, 0.04);
+  border-radius: 4px;
+
+  background: url(./link.svg) no-repeat center center #ffffff;
   color: #3b3b3b;
-  cursor: pointer;
-  display: inline-block;
-  font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol";
+
   font-size: 16px;
   font-weight: 600;
-  line-height: normal;
-  margin: 0 0 20px 0;
-  min-height: 60px;
-  min-width: 0;
-  outline: none;
-  padding: 16px 24px;
-  text-align: left;
-  text-decoration: none;
-  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+
+  cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  width: 50%;
+  appearance: none;
+  outline: none;
+  text-decoration: none;
   will-change: transform;
+
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.button:disabled {
+.select-button:disabled {
   pointer-events: none;
 }
 
-.button:hover {
+.select-button:hover {
   color: #fff;
   background-color: #1a1a1a;
   box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
   transform: translateY(-2px);
 }
 
-.button:active {
+.select-button:active {
   box-shadow: none;
   transform: translateY(0);
 }

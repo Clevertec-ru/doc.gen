@@ -8,6 +8,8 @@ const { WORD_SAMPLE_PATH } = require("../constants/word-sample-path");
 const { OUTPUT_DIRECTORY } = require("../constants/output-directory");
 
 const generateWordDocs = (fileDirectory) => {
+  console.log(fileDirectory, OUTPUT_DIRECTORY, WORD_SAMPLE_PATH);
+
   const wordSampleFile = fs.readFileSync(WORD_SAMPLE_PATH, "binary");
   const Excel = new ExcelController(fileDirectory);
   const Word = new WordController(OUTPUT_DIRECTORY, wordSampleFile);
