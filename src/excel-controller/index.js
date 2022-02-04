@@ -65,6 +65,11 @@ class ExcelController {
         [EXCEL_INVERTED_COLUMN_NAMES[columnName]]: columnValue,
       };
     }
+    if (columnName === EXCEL_COLUMN_NAMES.sex) {
+      const sex = columnValue === "М" ? "гражданин" : "гражданка";
+
+      return { [EXCEL_INVERTED_COLUMN_NAMES[columnName]]: sex };
+    }
 
     return { [EXCEL_INVERTED_COLUMN_NAMES[columnName]]: columnValue };
   }
