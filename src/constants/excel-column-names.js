@@ -21,6 +21,7 @@ const EXCEL_COLUMN_NAMES = {
   recipientBankSWIFT: "S.W.I.F.T.",
   recipientBankAccount: "Счет получателя",
   recipient: "Получатель",
+  sex: "Пол",
 };
 
 const EXCEL_INVERTED_COLUMN_NAMES = {
@@ -46,6 +47,7 @@ const EXCEL_INVERTED_COLUMN_NAMES = {
   [EXCEL_COLUMN_NAMES.recipientBankSWIFT]: "recipientBankSWIFT",
   [EXCEL_COLUMN_NAMES.recipientBankAccount]: "recipientBankAccount",
   [EXCEL_COLUMN_NAMES.recipient]: "recipient",
+  [EXCEL_COLUMN_NAMES.sex]: "gender",
   textedAmount: "textedAmount",
   initialName: "initialName",
 };
