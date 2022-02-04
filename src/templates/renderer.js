@@ -21,6 +21,15 @@ const getResultList = () => {
   return list;
 };
 
+const getOpenResultButton = () => {
+  const resultButton = document.createElement("button");
+
+  resultButton.className = "result-block result-button";
+  resultButton.innerText = "Открыть файл";
+
+  return resultButton;
+};
+
 document.addEventListener("drop", (event) => {
   event.preventDefault();
   event.stopPropagation();
@@ -55,21 +64,23 @@ button.addEventListener("click", () => {
 
 ipcRenderer.on("generate-success", (_, messages) => {
   const list = getResultList();
+  const resultButton = getOpenResultButton();
 
   resultBlock.innerHTML = null;
 
   resultBlock.append(list);
+  resultBlock.append(resultButton);
 
-  messages.forEach(({ resultName, fileName }) => {
+  messages.forEach((message) => {
     const fileButton = document.createElement("button");
 
-    fileButton.innerText = resultName;
-
-    fileButton.addEventListener("click", () => {
-      ipcRenderer.send("file-selected", fileName);
-    });
+    fileButton.innerText = message;
 
     list.append(fileButton);
+  });
+
+  resultButton.addEventListener("click", () => {
+    ipcRenderer.send("open-result");
   });
 
   button.disabled = false;
