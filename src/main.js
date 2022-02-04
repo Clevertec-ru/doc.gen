@@ -11,7 +11,7 @@ const preloadPath = path.join(__dirname, "preload.js");
 const mainTemplatePath = path.join(__dirname, "./templates/index.html");
 
 app.whenReady().then(() => {
-  const win = createMainWindow(preloadPath, mainTemplatePath);
+  const win = createMainWindow(preloadPath, mainTemplatePath, true);
 
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.

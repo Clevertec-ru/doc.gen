@@ -5,8 +5,6 @@ const createMainWindow = (preloadPath = "", mainTemplatePath = "", isDev = false
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    resizable: false,
-    fullscreen: false,
     webPreferences: {
       preload: preloadPath,
       nodeIntegration: true,
