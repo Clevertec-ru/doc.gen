@@ -8,7 +8,6 @@ const deleteFilesFromOutput = (outputDirectory = null) => {
 
   for (const file of files) {
     fs.unlinkSync(path.join(outputDirectory, file));
-    console.log(`file ${file} deleted`);
   }
 };
 

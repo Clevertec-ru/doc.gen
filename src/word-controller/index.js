@@ -22,7 +22,7 @@ class WordController {
     doc.render(template);
 
     const buf = doc.getZip().generate({ type: "nodebuffer" });
-    const fileName = `Акт-ГПД-Н${contract} ${endWorkDate}(${textedAmount}=00).docx`;
+    const fileName = `Акт-ГПД-Н${contract} ${endWorkDate}(${textedAmount}=00)`;
     const resultName = `${initialName.split(" ")[0]} ${fileName}`;
 
     fs.writeFileSync(`${this.#outputDirectory}/${fileName}`, buf);

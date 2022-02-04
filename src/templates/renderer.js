@@ -54,12 +54,10 @@ button.addEventListener("click", () => {
 });
 
 ipcRenderer.on("generate-success", (_, messages) => {
-  const title = getTitle("Сгенерированные акты:");
   const list = getResultList();
 
-  resultBlock.innerHTML = "";
+  resultBlock.innerHTML = null;
 
-  resultBlock.append(title);
   resultBlock.append(list);
 
   messages.forEach(({ resultName, fileName }) => {
@@ -78,6 +76,6 @@ ipcRenderer.on("generate-success", (_, messages) => {
 });
 
 ipcRenderer.on("file-cancelled", () => {
-  resultBlock.innerHTML = "";
+  resultBlock.innerHTML = null;
   button.disabled = false;
 });
