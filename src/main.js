@@ -6,6 +6,7 @@ const { createMainWindow } = require("./window");
 const { generateWordDocs } = require("./generate-word-docs");
 
 const { OUTPUT_DIRECTORY } = require("./constants/output-directory");
+const { RESULT_FILE_NAME } = require("./constants/result-file-name");
 
 const preloadPath = path.join(__dirname, "preload.js");
 const mainTemplatePath = path.join(__dirname, "./templates/index.html");
@@ -38,7 +39,7 @@ app.whenReady().then(() => {
       });
   });
 
-  ipcMain.on("file-selected", (_, fileName) => {
-    shell.openPath(`${OUTPUT_DIRECTORY}\\${fileName}`);
+  ipcMain.on("open-result", async () => {
+    shell.openPath(`${OUTPUT_DIRECTORY}\\${RESULT_FILE_NAME}`);
   });
 });
