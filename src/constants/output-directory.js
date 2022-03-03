@@ -1,8 +1,7 @@
 const path = require("path");
-const { app } = require("electron");
 
-const OUTPUT_DIRECTORY = path.join(app.getAppPath(), "../output");
+const { OUTSIDE_PATH } = require("./outside-path");
 
-module.exports = {
-  OUTPUT_DIRECTORY,
-};
+const OUTPUT_DIRECTORY = path.join(OUTSIDE_PATH, "output");
+
+module.exports = { OUTPUT_DIRECTORY };

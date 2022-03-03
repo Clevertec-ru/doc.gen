@@ -8,7 +8,7 @@
     "start": "electron src/main.js",
     "build": "electron-builder -w"
   },
-  "author": "Kirill Kutuzov",
+  "author": "Clevertec",
   "license": "ISC",
   "postinstall": "electron-builder install-app-deps",
   "build": {
@@ -50,7 +50,8 @@
     "docx-merger": "^1.2.2",
     "docxtemplater": "^3.28.2",
     "number-to-words-ru": "^2.3.2",
-    "pizzip": "^3.1.1"
+    "pizzip": "^3.1.1",
+    "simple-excel-to-json": "^2.3.0"
   },
   "devDependencies": {
     "electron": "^16.0.5",
