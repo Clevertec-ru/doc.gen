@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Montserrat";
-  src: url(./Montserrat-Bold.ttf) format("truetype");
+  src: url(../asserts/Montserrat-Bold.ttf) format("truetype");
 }
 
 html {
@@ -39,6 +39,7 @@ body {
   padding: 10px 0;
   max-height: 200px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .result-block .result-button {
@@ -59,9 +60,11 @@ body {
   background: #bd0c1a;
 }
 
-.result-list button {
+.result-list li {
+  cursor: pointer;
   position: relative;
-  width: 100%;
+  list-style: none;
+  list-style-type: none;
   background-color: #ffffff;
   padding: 8px 56px 8px 40px;
   text-align: left;
@@ -69,22 +72,22 @@ body {
   transition: all 500ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.result-list button:nth-of-type(even) {
+.result-list li:nth-of-type(even) {
   background-color: #f5f4f8;
 }
 
-.result-list button::before {
+.result-list li::before {
   position: absolute;
   width: 18px;
   height: 18px;
   left: 10px;
   content: "";
-  background: url(./note.svg) center no-repeat;
+  background: url(../asserts/note.svg) center no-repeat;
   top: 50%;
   transform: translateY(-50%);
 }
 
-.result-list button::after {
+.result-list li::after {
   position: absolute;
   right: 10px;
   content: ".docx";
@@ -92,7 +95,7 @@ body {
   transform: translateY(-50%);
 }
 
-.result-list button:hover {
+.result-list li:hover {
   background-color: #5757574f;
 }
 
@@ -107,7 +110,7 @@ body {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08), 0px 1px 12px rgba(0, 0, 0, 0.04);
   border-radius: 4px;
 
-  background: url(./link.svg) no-repeat center center #ffffff;
+  background: url(../asserts/link.svg) no-repeat center center #ffffff;
   color: #3b3b3b;
 
   font-size: 16px;
