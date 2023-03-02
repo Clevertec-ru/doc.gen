@@ -3,16 +3,15 @@ const { app, ipcMain, dialog, shell } = require("electron");
 const path = require("path");
 
 const { createMainWindow } = require("./window");
-const { generateWordDocs } = require("./generate-word-docs");
+const { WordContractGenerator } = require("./word-contract-generator");
 
 const { OUTPUT_DIRECTORY } = require("./constants/output-directory");
-const { RESULT_FILE_NAME } = require("./constants/result-file-name");
 
 const preloadPath = path.join(__dirname, "preload.js");
 const mainTemplatePath = path.join(__dirname, "./templates/index.html");
 
 app.whenReady().then(() => {
-  const win = createMainWindow(preloadPath, mainTemplatePath);
+  const win = createMainWindow(preloadPath, mainTemplatePath, true);
 
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
@@ -31,15 +30,17 @@ app.whenReady().then(() => {
     dialog
       .showOpenDialog({ properties: ["openFile"] })
       .then((file) => {
-        const generatedDocsMessage = generateWordDocs(file.filePaths[0]);
-        win.webContents.send("generate-success", generatedDocsMessage);
+        const wordContractGenerator = new WordContractGenerator(OUTPUT_DIRECTORY, file.filePaths[0]);
+        const generatedFilesInformation = wordContractGenerator.generateContractDocuments();
+
+        win.webContents.send("generate-success", generatedFilesInformation);
       })
       .catch(() => {
         win.webContents.send("file-cancelled");
       });
   });
 
-  ipcMain.on("open-result", async () => {
-    shell.openPath(`${OUTPUT_DIRECTORY}\\${RESULT_FILE_NAME}`);
+  ipcMain.on("open-result", async (event, filePath) => {
+    shell.openPath(filePath);
   });
 });

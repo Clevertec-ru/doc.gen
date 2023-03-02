@@ -1,6 +1,5 @@
 const { ipcRenderer } = require("electron");
 
-const testElement = document.getElementById("test-element");
 const button = document.getElementById("select-file-button");
 const resultBlock = document.getElementById("result");
 
@@ -13,14 +12,6 @@ const getTitle = (text = "") => {
   return title;
 };
 
-const getResultList = () => {
-  const list = document.createElement("div");
-
-  list.className = "result-block result-list";
-
-  return list;
-};
-
 const getOpenResultButton = () => {
   const resultButton = document.createElement("button");
 
@@ -30,57 +21,46 @@ const getOpenResultButton = () => {
   return resultButton;
 };
 
-document.addEventListener("drop", (event) => {
-  event.preventDefault();
-  event.stopPropagation();
+const getResultList = () => {
+  const list = document.createElement("ul");
 
-  for (const file of event.dataTransfer.files) {
-    // Using the path attribute to get absolute file path
-    console.log("File Path of dragged files: ", file.type);
-  }
-});
+  list.className = "result-block result-list";
 
-document.addEventListener("dragover", (event) => {
-  event.preventDefault();
-  event.stopPropagation();
-});
-
-document.addEventListener("dragenter", (event) => {
-  testElement.innerText = "work!";
-  console.log("File is in the Drop Space");
-});
-
-document.addEventListener("dragleave", (event) => {
-  console.log("File has left the Drop Space");
-});
+  return list;
+};
 
 button.addEventListener("click", () => {
   const title = getTitle("Выбор файла...");
-  resultBlock.append(title);
 
   button.disabled = true;
+
+  resultBlock.append(title);
   ipcRenderer.send("click-button");
 });
 
-ipcRenderer.on("generate-success", (_, messages) => {
+ipcRenderer.on("generate-success", (event, messages) => {
   const list = getResultList();
   const resultButton = getOpenResultButton();
 
   resultBlock.innerHTML = null;
-
   resultBlock.append(list);
   resultBlock.append(resultButton);
 
-  messages.forEach((message) => {
-    const fileButton = document.createElement("button");
+  messages.fileNames.forEach((filename) => {
+    const fileButton = document.createElement("li");
 
-    fileButton.innerText = message;
+    list.className = "result-block result-list";
+    fileButton.innerText = filename;
+
+    fileButton.addEventListener("click", () => {
+      ipcRenderer.send("open-result", messages.filePath);
+    });
 
     list.append(fileButton);
   });
 
   resultButton.addEventListener("click", () => {
-    ipcRenderer.send("open-result");
+    ipcRenderer.send("open-result", messages.filePath);
   });
 
   button.disabled = false;

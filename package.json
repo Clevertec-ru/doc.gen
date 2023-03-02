@@ -50,8 +50,7 @@
     "docx-merger": "^1.2.2",
     "docxtemplater": "^3.28.2",
     "number-to-words-ru": "^2.3.2",
-    "pizzip": "^3.1.1",
-    "simple-excel-to-json": "^2.3.0"
+    "pizzip": "^3.1.1"
   },
   "devDependencies": {
     "electron": "^16.0.5",
