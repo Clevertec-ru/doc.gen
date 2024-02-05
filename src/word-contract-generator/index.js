@@ -1,12 +1,15 @@
-const fs = require("fs");
+const fs = require('fs');
 
-const { ExcelContractParser } = require("../excel-contract-parser");
+const { ExcelContractParser } = require('../excel-contract-parser');
 
-const { createEmptyFolder } = require("../utils/create-empty-folder");
-const { mergeWordDocs, generateWordDocumentBySamples } = require("./helpers");
+const { createEmptyFolder } = require('../utils/create-empty-folder');
+const { mergeWordDocs, generateWordDocumentBySamples } = require('./helpers');
 
-const { EXCEL_COLUMN_NAMES, EXCEL_INVERTED_COLUMN_NAMES } = require("../constants/excel-column-names");
-const { WORD_SAMPLE_PATHS } = require("../constants/word-sample-paths");
+const {
+  EXCEL_COLUMN_NAMES,
+  EXCEL_INVERTED_COLUMN_NAMES,
+} = require('../constants/excel-column-names');
+const { WORD_SAMPLE_PATHS } = require('../constants/word-sample-paths');
 
 class WordContractGenerator {
   /**
@@ -25,36 +28,57 @@ class WordContractGenerator {
    * @returns {{ filePath: string, fileName: string }[]} массивами путей к сгенерированным файлам и имён этих файлов
    */
   generateContractDocuments() {
-    const modifiedExcelRowsArray = this._excelContractParser.getModifiedRowsArray();
+    const modifiedExcelRowsArray =
+      this._excelContractParser.getModifiedRowsArray();
     const defaultAccamulator = { filePaths: [], fileNames: [] };
 
-    createEmptyFolder(this._outputDirectory);
+    const generatedFilePaths = modifiedExcelRowsArray.reduce(
+      (acc, excelRows) => {
+        const currentGender =
+          excelRows[EXCEL_INVERTED_COLUMN_NAMES[EXCEL_COLUMN_NAMES.sex]];
+        const currentContract =
+          excelRows[EXCEL_INVERTED_COLUMN_NAMES[EXCEL_COLUMN_NAMES.contract]];
+        const currentContractType = excelRows[
+          EXCEL_INVERTED_COLUMN_NAMES[EXCEL_COLUMN_NAMES.contract]
+        ]
+          .slice(7, 9)
+          .replaceAll('-', '');
+        const currentEndWordDate =
+        excelRows[
+          EXCEL_INVERTED_COLUMN_NAMES[EXCEL_COLUMN_NAMES.endWorkDate]
+        ];
+        const currentTextedAmount =
+        excelRows[EXCEL_INVERTED_COLUMN_NAMES.textedAmount];
+        const currentWordPath =
+          WORD_SAMPLE_PATHS[currentGender][currentContractType];
 
-    const generatedFilePaths = modifiedExcelRowsArray.reduce((acc, excelRows) => {
-      const currentGender = excelRows[EXCEL_INVERTED_COLUMN_NAMES[EXCEL_COLUMN_NAMES.sex]];
-      const currentContract = excelRows[EXCEL_INVERTED_COLUMN_NAMES[EXCEL_COLUMN_NAMES.contract]];
-      const currentContractType = excelRows[EXCEL_INVERTED_COLUMN_NAMES[EXCEL_COLUMN_NAMES.contractType]];
-      const currentEndWordDate = excelRows[EXCEL_INVERTED_COLUMN_NAMES[EXCEL_COLUMN_NAMES.endWorkDate]];
-      const currentTextedAmount = excelRows[EXCEL_INVERTED_COLUMN_NAMES.textedAmount];
-      const currentWordPath = WORD_SAMPLE_PATHS[currentGender][currentContractType];
+        const fileName = `АКТ-${currentContract}-${currentEndWordDate}(${currentTextedAmount}=00)`;
+        const outputFilePath = `${this._outputDirectory}\\${fileName}.docx`;
+        const wordSampleFile = fs.readFileSync(currentWordPath, 'binary');
 
-      const fileName = `Акт-ГПД-Н${currentContract} ${currentEndWordDate}(${currentTextedAmount}=00)`;
-      const outputFilePath = `${this._outputDirectory}\\${fileName}.docx`;
-      const wordSampleFile = fs.readFileSync(currentWordPath, "binary");
+        generateWordDocumentBySamples(
+          wordSampleFile,
+          excelRows,
+          outputFilePath
+        );
 
-      generateWordDocumentBySamples(wordSampleFile, excelRows, outputFilePath);
+        acc.fileNames.push(fileName);
+        acc.filePaths.push(outputFilePath);
 
-      acc.fileNames.push(fileName);
-      acc.filePaths.push(outputFilePath);
+        return acc;
+      },
+      defaultAccamulator
+    );
 
-      return acc;
-    }, defaultAccamulator);
+    const outputFilePath = `${this._outputDirectory}\\`;
 
-    const outputFilePath = `${this._outputDirectory}\\output.docx`;
+    // mergeWordDocs(generatedFilePaths.filePaths, outputFilePath); // закидывает все в один файл - использовать по надобности
 
-    mergeWordDocs(generatedFilePaths.filePaths, outputFilePath);
-
-    return { fileNames: generatedFilePaths.fileNames, filePath: outputFilePath };
+    return {
+      fileNames: generatedFilePaths.fileNames,
+      allFilePaths: generatedFilePaths.filePaths,
+      filePath: outputFilePath,
+    };
   }
 }
 

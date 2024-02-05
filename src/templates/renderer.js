@@ -1,44 +1,44 @@
-const { ipcRenderer } = require("electron");
+const { ipcRenderer } = require('electron');
 
-const button = document.getElementById("select-file-button");
-const resultBlock = document.getElementById("result");
+const button = document.getElementById('select-file-button');
+const resultBlock = document.getElementById('result');
 
-const getTitle = (text = "") => {
-  const title = document.createElement("p");
+const getTitle = (text = '') => {
+  const title = document.createElement('p');
 
-  title.className = "result-title";
+  title.className = 'result-title';
   title.innerText = text;
 
   return title;
 };
 
 const getOpenResultButton = () => {
-  const resultButton = document.createElement("button");
+  const resultButton = document.createElement('button');
 
-  resultButton.className = "result-block result-button";
-  resultButton.innerText = "Открыть файл";
+  resultButton.className = 'result-block result-button';
+  resultButton.innerText = 'Показать результаты';
 
   return resultButton;
 };
 
 const getResultList = () => {
-  const list = document.createElement("ul");
+  const list = document.createElement('ul');
 
-  list.className = "result-block result-list";
+  list.className = 'result-block result-list';
 
   return list;
 };
 
-button.addEventListener("click", () => {
-  const title = getTitle("Выбор файла...");
+button.addEventListener('click', () => {
+  const title = getTitle('Выбор файла...');
 
   button.disabled = true;
 
   resultBlock.append(title);
-  ipcRenderer.send("click-button");
+  ipcRenderer.send('click-button');
 });
 
-ipcRenderer.on("generate-success", (event, messages) => {
+ipcRenderer.on('generate-success', (event, messages) => {
   const list = getResultList();
   const resultButton = getOpenResultButton();
 
@@ -47,26 +47,32 @@ ipcRenderer.on("generate-success", (event, messages) => {
   resultBlock.append(resultButton);
 
   messages.fileNames.forEach((filename) => {
-    const fileButton = document.createElement("li");
+    const fileButton = document.createElement('li');
 
-    list.className = "result-block result-list";
+    list.className = 'result-block result-list';
     fileButton.innerText = filename;
-
-    fileButton.addEventListener("click", () => {
-      ipcRenderer.send("open-result", messages.filePath);
+    messages.allFilePaths.forEach((path) => {
+      fileButton.addEventListener('click', () => {
+        ipcRenderer.send('open-result', path);
+      });
     });
 
     list.append(fileButton);
   });
 
-  resultButton.addEventListener("click", () => {
-    ipcRenderer.send("open-result", messages.filePath);
+  resultButton.addEventListener('click', () => {
+    ipcRenderer.send('open-result', messages.filePath);
   });
 
   button.disabled = false;
 });
 
-ipcRenderer.on("file-cancelled", () => {
+ipcRenderer.on('file-cancelled', () => {
   resultBlock.innerHTML = null;
+  button.disabled = false;
+});
+
+ipcRenderer.on('error', (e, messages) => {
+  resultBlock.innerHTML = messages;
   button.disabled = false;
 });

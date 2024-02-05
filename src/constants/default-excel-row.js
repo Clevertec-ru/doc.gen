@@ -25,6 +25,7 @@ const DEFALUT_EXCEL_ROW = {
   [EXCEL_COLUMN_NAMES.recipientBankAccount]: "",
   [EXCEL_COLUMN_NAMES.recipient]: "",
   [EXCEL_COLUMN_NAMES.sex]: "",
+  [EXCEL_COLUMN_NAMES.software]: "",
 };
 
 module.exports = { DEFALUT_EXCEL_ROW };

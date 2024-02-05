@@ -23,6 +23,7 @@ const EXCEL_COLUMN_NAMES = {
   recipientBankAccount: "Recipient Bank Account",
   recipient: "Recipient",
   sex: "Sex",
+  software: "Software",
 };
 
 const EXCEL_INVERTED_COLUMN_NAMES = {
@@ -50,9 +51,12 @@ const EXCEL_INVERTED_COLUMN_NAMES = {
   [EXCEL_COLUMN_NAMES.recipientBankAccount]: "recipientBankAccount",
   [EXCEL_COLUMN_NAMES.recipient]: "recipient",
   [EXCEL_COLUMN_NAMES.sex]: "sex",
+  [EXCEL_COLUMN_NAMES.software]: "software",
   textedAmount: "textedAmount",
   initialName: "initialName",
   endWorkDateFormatted: "endWorkDateFormatted",
+  formattedDateShort: "formattedDateShort",
+  numberedAmount: "numberedAmount",
 };
 
 module.exports = {

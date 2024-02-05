@@ -24,7 +24,6 @@ class ExcelContractParser {
     const jsonExcel = this.#getParsedExcelToJson();
     const assignedRowsArray = getAssignedRowsArray(jsonExcel);
     const assignedRowsWithMissingFields = setMissingEmptyFields(assignedRowsArray);
-
     return assignedRowsWithMissingFields.map((row) => {
       return Object.keys(row).reduce((acc, columnName) => {
         const correctColumn = getCorrectExcelValue(row[columnName], columnName);

@@ -1,7 +1,7 @@
 {
   "name": "pdf-formatter",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.1.2",
+  "description": "different files",
   "main": "./src/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -14,14 +14,14 @@
   "build": {
     "productName": "doc-gen",
     "appId": "e1",
-    "electronVersion": "12.0.5",
+    "electronVersion": "28.2.1",
     "files": [
       "./src/**"
     ],
     "extraFiles": [
       {
         "from": "./assets",
-        "to": "./assets"
+        "to": "./resources/assets"
       }
     ],
     "win": {
@@ -53,7 +53,7 @@
     "pizzip": "^3.1.1"
   },
   "devDependencies": {
-    "electron": "^16.0.5",
-    "electron-builder": "^22.14.5"
+    "electron": "^28.2.1",
+    "electron-builder": "24.9.1"
   }
 }
