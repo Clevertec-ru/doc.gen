@@ -57,6 +57,7 @@ const EXCEL_INVERTED_COLUMN_NAMES = {
   endWorkDateFormatted: "endWorkDateFormatted",
   formattedDateShort: "formattedDateShort",
   numberedAmount: "numberedAmount",
+  contractDateFormatted: "contractDateFormatted",
 };
 
 module.exports = {

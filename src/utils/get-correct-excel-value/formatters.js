@@ -18,7 +18,7 @@ const getCorrectStartWorkDate = (date, columnName) => {
 };
 
 const getCorrectEndWorkDate = (date, columnName) => {
-const correctDate = DateTime.fromFormat(date, 'dd.MM.yyyy');
+  const correctDate = DateTime.fromFormat(date, 'dd.MM.yyyy');
   const formattedDate = correctDate.toFormat('dd.MM.yyyy');
   const formattedDateShort = correctDate.toFormat('ddMMyy');
   const formattedDateRus = correctDate.toFormat('«dd» MMMM yyyy г', {
@@ -33,10 +33,16 @@ const correctDate = DateTime.fromFormat(date, 'dd.MM.yyyy');
 };
 
 const getCorrectContractDate = (date, columnName) => {
-  const parsedDate = DateTime.fromFormat(date, 'dd.MM.yy');
-  const formattedDate = parsedDate.toFormat('dd.MM.yyyy');
+  const correctDate = DateTime.fromFormat(date, 'dd.MM.yy');
+  const formattedDate = correctDate.toFormat('dd.MM.yyyy');
+  const contractDateFormatted = correctDate.toFormat('«dd» MMMM yyyy г', {
+    locale: 'ru',
+  });
 
-  return { [EXCEL_INVERTED_COLUMN_NAMES[columnName]]: formattedDate };
+  return {
+    [EXCEL_INVERTED_COLUMN_NAMES[columnName]]: formattedDate,
+    [EXCEL_INVERTED_COLUMN_NAMES.contractDateFormatted]: contractDateFormatted,
+  };
 };
 
 const getCorrectActSum = (actSum, columnName) => {

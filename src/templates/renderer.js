@@ -52,8 +52,12 @@ ipcRenderer.on('generate-success', (event, messages) => {
     list.className = 'result-block result-list';
     fileButton.innerText = filename;
     messages.allFilePaths.forEach((path) => {
-      fileButton.addEventListener('click', () => {
-        ipcRenderer.send('open-result', path);
+      fileButton.addEventListener('click', (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        if (path.includes(event.target.innerHTML)) {
+          ipcRenderer.send('open-result', path);
+        }
       });
     });
 

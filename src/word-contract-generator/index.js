@@ -10,6 +10,9 @@ const {
   EXCEL_INVERTED_COLUMN_NAMES,
 } = require('../constants/excel-column-names');
 const { WORD_SAMPLE_PATHS } = require('../constants/word-sample-paths');
+const {
+  getInitialsFromName,
+} = require('../utils/get-correct-excel-value/helpers');
 
 class WordContractGenerator {
   /**
@@ -44,15 +47,22 @@ class WordContractGenerator {
           .slice(7, 9)
           .replaceAll('-', '');
         const currentEndWordDate =
-        excelRows[
-          EXCEL_INVERTED_COLUMN_NAMES[EXCEL_COLUMN_NAMES.endWorkDate]
-        ];
+          excelRows[
+            EXCEL_INVERTED_COLUMN_NAMES[EXCEL_COLUMN_NAMES.endWorkDate]
+          ];
         const currentTextedAmount =
-        excelRows[EXCEL_INVERTED_COLUMN_NAMES.textedAmount];
+          excelRows[EXCEL_INVERTED_COLUMN_NAMES.textedAmount];
         const currentWordPath =
           WORD_SAMPLE_PATHS[currentGender][currentContractType];
 
-        const fileName = `АКТ-${currentContract}-${currentEndWordDate}(${currentTextedAmount}=00)`;
+        const initials = getInitialsFromName(
+          excelRows[EXCEL_INVERTED_COLUMN_NAMES[EXCEL_COLUMN_NAMES.fio]]
+        );
+
+        const actNumber =
+          excelRows[EXCEL_INVERTED_COLUMN_NAMES[EXCEL_COLUMN_NAMES.actNumber]];
+
+        const fileName = `АКТ-${currentContract}-${actNumber} ${initials}`;
         const outputFilePath = `${this._outputDirectory}\\${fileName}.docx`;
         const wordSampleFile = fs.readFileSync(currentWordPath, 'binary');
 
